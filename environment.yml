@@ -1,0 +1,13 @@
+name: devops-prj
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10 # 원하면 버전 바꿔도 돼 << gpt가 반말로 달아줌 ;;
+  - requests>=2.27.0
+  - python-dotenv=0.21.1
+  - pip
+  - pip:
+      - selenium==4.8.0
+      - fake_useragent==1.1.1
+      - webdriver_manager==3.8.5
