@@ -9,7 +9,6 @@ import time
 
 from dotenv import load_dotenv
 
-
 #################### Detecting Site에 따른 변경부 ####################
 slack_channel = "g-컴퓨터공학-주요공지"
 detecting_website = (
@@ -18,13 +17,14 @@ detecting_website = (
 detecting_interval = 60
 
 xpath_list = []
-for i in range(1, 43):
+for i in range(1, 12):
     notice = {
-        "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/a",
-        "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div/span[2]",
+        "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/a",
+        "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
     }
     xpath_list.append(notice)
-#################### Detecting Site에 따른 변경부 ####################
+#################### Detecting Site에 따른 변경부 ###################
+
 
 load_dotenv()
 
@@ -38,13 +38,17 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument(f"user-agent={userAgent}")
 
+# 드라이버 실행
 driver = webdriver.Chrome(
-    service=Service(ChromeDriverManager().install()), options=chrome_options
+    service=Service(ChromeDriverManager().install()), 
+    options=chrome_options
 )
 
 # 3초 기다림
-driver.implicitly_wait(3)
+
+driver.implicitly_wait(10)
 driver.get(detecting_website)
+time.sleep(10)
 
 # UTC+9 Timezone에서의 오늘 날짜 formatting
 date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime(
@@ -61,13 +65,16 @@ def crawl_today_notices():
     new_notices.clear()
     for each_xpath in xpath_list:
         notice_date = driver.find_element(By.XPATH, each_xpath["registered_date"]).text
-        if notice_date == date_today:
-            notice_title = driver.find_element(By.XPATH, each_xpath["title"])
-            notice = {
-                "title": notice_title.text,
-                "link": notice_title.get_attribute("href"),
-            }
-            new_notices.append(notice)
+        notice_title = driver.find_element(By.XPATH, each_xpath["title"]).text
+        print(notice_title)
+        print(notice_date)
+        # if notice_date == date_today:
+        #     # notice_title = driver.find_element(By.XPATH, each_xpath["title"])
+        #     notice = {
+        #         "title": notice_title.text,
+        #         "link": notice_title.get_attribute("href"),
+        #     }
+        #     new_notices.append(notice)
 
 
 def detect_changed_notices():
@@ -81,26 +88,26 @@ def detect_changed_notices():
 
 # Initialize: update old_notices at Script execution point
 crawl_today_notices()
-old_notices = new_notices.copy()
+# old_notices = new_notices.copy()
 
-try:
-    # slack_api.notify_started(slack_channel)
+# try:
+#     # slack_api.notify_started(slack_channel)
 
-    # 반복 실행
-    while True:
-        # 오늘 올라온 공지 detect
-        crawl_today_notices()
+#     # 반복 실행
+#     while True:
+#         # 오늘 올라온 공지 detect
+#         crawl_today_notices()
 
-        # 기존 공지-새 공지 비교
-        detect_changed_notices()
+#         # 기존 공지-새 공지 비교
+#         detect_changed_notices()
 
-        # 저장하고 있던 공지 업데이트
-        old_notices = new_notices.copy()
+#         # 저장하고 있던 공지 업데이트
+#         old_notices = new_notices.copy()
 
-        # 1분 후 다시 실행
-        time.sleep(detecting_interval)
-        driver.refresh()
+#         # 1분 후 다시 실행
+#         time.sleep(detecting_interval)
+#         driver.refresh()
 
-finally:
-    driver.quit()
-    # slack_api.notify_terminated(slack_channel)
+# finally:
+#     driver.quit()
+#     # slack_api.notify_terminated(slack_channel)
