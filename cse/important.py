@@ -21,13 +21,8 @@ detecting_website = (
 )
 detecting_interval = 60
 
-xpath_list = []
-for i in range(1, 12):
-    notice = {
-        "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/a",
-        "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
-    }
-    xpath_list.append(notice)
+title_parent = f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul"
+
 #################### Detecting Site에 따른 변경부 ###################
 
 
@@ -54,6 +49,19 @@ driver = webdriver.Chrome(
 driver.implicitly_wait(10)
 driver.get(detecting_website)
 time.sleep(5)
+
+el_notice_box = driver.find_element(By.XPATH, title_parent)
+list_items = el_notice_box.find_elements(By.TAG_NAME, "li")
+notice_num = len(list_items)
+
+xpath_list = []
+for i in range(1, notice_num):
+    notice = {
+        "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/a",
+        "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
+    }
+    xpath_list.append(notice)
+
 
 # UTC+9 Timezone에서의 오늘 날짜 formatting
 date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime(

@@ -7,9 +7,6 @@ from fake_useragent import UserAgent
 import datetime
 import time
 
-from dotenv import load_dotenv
-
-
 # 오늘 등록된 공지만 crawl
 def crawl_today_notices(driver, xpath_list):
     # new_notices.clear()
