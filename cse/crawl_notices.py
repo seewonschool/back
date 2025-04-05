@@ -17,9 +17,6 @@ def crawl_today_notices(driver, xpath_list):
 
         notice_title = el_notice_title.text
         notice_href = el_notice_title.get_attribute("href")
-        print(notice_title)
-        print(notice_date)
-        print(notice_href)
         new_list.append(dict(
             title = notice_title, 
             date = notice_date, 

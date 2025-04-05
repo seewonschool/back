@@ -25,7 +25,7 @@ def read_root():
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
-@app.get("/notices/today/{major}")
+@app.get("/notices/all/{major}")
 def read_notice(major: Major):
     if major == "cse":
       return cse_important()
@@ -43,3 +43,8 @@ def read_notice(major: Major):
         return CBE_important()
     if major == "EE":
         return EE_important()
+
+# @app.get("/notices/today/{major}")
+# def filter_notice(major: Major):
+#     if major == "cse":
+
