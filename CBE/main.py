@@ -1,4 +1,4 @@
-### 기계공학과 - 주요공지
+### 화공생명공학과과 - 주요공지
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -12,13 +12,13 @@ from dotenv import load_dotenv
 
 from cse.crawl_notices import crawl_today_notices
 
-def MEC_important():
+def CBE_important():
     detecting_website = (
-        "http://me.sogang.ac.kr/v2/bbs/board.php?bo_table=sub6_1"
+        "http://chemeng.sogang.ac.kr/kor/sub/05_04.php"
     )
     detecting_interval = 60
 
-    title_parent = f"/html/body/div[2]/div[3]/div/div/div/form/table/tbody"
+    title_parent = f"/html/body/div/div/div[3]/div[2]/div[2]/div/table/tbody"
 
 
     load_dotenv()
@@ -52,8 +52,8 @@ def MEC_important():
     xpath_list = []
     for i in range(1, notice_num):
         notice = {
-            "title": f"/html/body/div[2]/div[3]/div/div/div/form/table/tbody/tr[{i}]/td[2]/a",
-            "registered_date": f"/html/body/div[2]/div[3]/div/div/div/form/table/tbody/tr[{i}]/td[4]"
+            "title": f"/html/body/div/div/div[3]/div[2]/div[2]/div/table/tbody/tr[{i}]/td[2]/a",
+            "registered_date": f"/html/body/div/div/div[3]/div[2]/div[2]/div/table/tbody/tr[{i}]/td[4]"
         }
         xpath_list.append(notice)
 
