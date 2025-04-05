@@ -30,6 +30,6 @@ def crawl_today_notices(driver, xpath_list):
         #     }
         #     new_notices.append(notice)
 
-    print(new_list)
+    # print(new_list)
     return new_list
   
