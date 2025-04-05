@@ -1,4 +1,4 @@
-### 국어국문학과 - 주요공지
+### AI기반 자유전공학부 - 주요공지
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -12,9 +12,9 @@ from dotenv import load_dotenv
 
 from cse.crawl_notices import crawl_today_notices
 
-def kor_important():
+def AI_important():
     detecting_website = (
-        "https://korea.sogang.ac.kr/front/cmsboardlist.do?siteId=korea&bbsConfigFK=506"
+        "https://aibased.sogang.ac.kr/front/cmsboardlist.do?siteId=aibased&bbsConfigFK=7510"
     )
     detecting_interval = 60
 

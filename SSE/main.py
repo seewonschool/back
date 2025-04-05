@@ -1,4 +1,4 @@
-### 국어국문학과 - 주요공지
+### 시스템반도체공학과과 - 주요공지
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -12,13 +12,13 @@ from dotenv import load_dotenv
 
 from cse.crawl_notices import crawl_today_notices
 
-def kor_important():
+def SSE_important():
     detecting_website = (
-        "https://korea.sogang.ac.kr/front/cmsboardlist.do?siteId=korea&bbsConfigFK=506"
+        "https://sse.sogang.ac.kr/kor/community/notice.php"
     )
     detecting_interval = 60
 
-    title_parent = f"/html/body/div/div[4]/div[2]/div[3]/div/div/ul"
+    title_parent = f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody"
 
 
     load_dotenv()
@@ -46,14 +46,14 @@ def kor_important():
     time.sleep(5)
 
     el_notice_box = driver.find_element(By.XPATH, title_parent)
-    list_items = el_notice_box.find_elements(By.TAG_NAME, "li")
+    list_items = el_notice_box.find_elements(By.TAG_NAME, "tr")
     notice_num = len(list_items)
 
     xpath_list = []
     for i in range(1, notice_num):
         notice = {
-            "title": f"/html/body/div/div[4]/div[2]/div[3]/div/div/ul/li[{i}]/div/div[2]/a",
-            "registered_date": f"/html/body/div/div[4]/div[2]/div[3]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
+            "title": f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[2]/div/a",
+            "registered_date": f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[3]"
         }
         xpath_list.append(notice)
 
