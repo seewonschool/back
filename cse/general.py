@@ -53,3 +53,5 @@ driver.get(detecting_website)
 time.sleep(5)
 
 crawl_today_notices(driver, xpath_list)
+
+

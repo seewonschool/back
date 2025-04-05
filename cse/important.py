@@ -14,12 +14,9 @@ from .crawl_notices import crawl_today_notices
 
 def cse_important():
     #################### Detecting Site에 따른 변경부 ####################
-    slack_channel = "g-컴퓨터공학-주요공지"
     detecting_website = (
         "https://scc.sogang.ac.kr/front/cmsboardlist.do?siteId=cs&bbsConfigFK=1905"
     )
-    detecting_interval = 60
-
     title_parent = f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul"
 
     #################### Detecting Site에 따른 변경부 ###################

@@ -1,5 +1,6 @@
 from enum import Enum
 
+### 카카오워크 채널 id
 class KakaoConversaionId(Enum):
   CSE = 12352747 #컴퓨터공학과, 아직 테스트 id
   AI = 12352848 #AI기반 자유전공학부
