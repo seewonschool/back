@@ -10,79 +10,62 @@ import time
 
 from dotenv import load_dotenv
 
-from crawl_notices import crawl_today_notices
+from .crawl_notices import crawl_today_notices
+
+def cse_important():
+    #################### Detecting Site에 따른 변경부 ####################
+    slack_channel = "g-컴퓨터공학-주요공지"
+    detecting_website = (
+        "https://scc.sogang.ac.kr/front/cmsboardlist.do?siteId=cs&bbsConfigFK=1905"
+    )
+    detecting_interval = 60
+
+    title_parent = f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul"
+
+    #################### Detecting Site에 따른 변경부 ###################
 
 
-
-#################### Detecting Site에 따른 변경부 ####################
-slack_channel = "g-컴퓨터공학-주요공지"
-detecting_website = (
-    "https://scc.sogang.ac.kr/front/cmsboardlist.do?siteId=cs&bbsConfigFK=1905"
-)
-detecting_interval = 60
-
-title_parent = f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul"
-
-#################### Detecting Site에 따른 변경부 ###################
+    load_dotenv()
 
 
-load_dotenv()
+    # Selenium options
+    chrome_options = webdriver.ChromeOptions()
+    ua = UserAgent()
+    userAgent = ua.random
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument(f"user-agent={userAgent}")
+
+    # 드라이버 실행
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()), 
+        options=chrome_options
+    )
+
+    # 3초 기다림
+
+    driver.implicitly_wait(10)
+    driver.get(detecting_website)
+    time.sleep(5)
+
+    el_notice_box = driver.find_element(By.XPATH, title_parent)
+    list_items = el_notice_box.find_elements(By.TAG_NAME, "li")
+    notice_num = len(list_items)
+
+    xpath_list = []
+    for i in range(1, notice_num):
+        notice = {
+            "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/a",
+            "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
+        }
+        xpath_list.append(notice)
+
+    data = crawl_today_notices(driver, xpath_list)
+    print(data)
+    return data
 
 
-# Selenium options
-chrome_options = webdriver.ChromeOptions()
-ua = UserAgent()
-userAgent = ua.random
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument(f"user-agent={userAgent}")
-
-# 드라이버 실행
-driver = webdriver.Chrome(
-    service=Service(ChromeDriverManager().install()), 
-    options=chrome_options
-)
-
-# 3초 기다림
-
-driver.implicitly_wait(10)
-driver.get(detecting_website)
-time.sleep(5)
-
-el_notice_box = driver.find_element(By.XPATH, title_parent)
-list_items = el_notice_box.find_elements(By.TAG_NAME, "li")
-notice_num = len(list_items)
-
-xpath_list = []
-for i in range(1, notice_num):
-    notice = {
-        "title": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/a",
-        "registered_date": f"/html/body/div/div[4]/div[2]/div[4]/div/div/ul/li[{i}]/div/div[2]/div/span[2]"
-    }
-    xpath_list.append(notice)
-
-
-# UTC+9 Timezone에서의 오늘 날짜 formatting
-date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime(
-    "%Y.%m.%d"
-)
-
-# Initialize: Use gloabl variable
-old_notices = []
-new_notices = []
-
-def detect_changed_notices():
-    for new_notice in new_notices:
-        if new_notice not in old_notices:
-            # slack_api.notify_change_detected(
-            #     slack_channel, new_notice["title"], new_notice["link"]
-            # )
-            print(new_notice["title"], new_notice["link"])
-
-
-# Initialize: update old_notices at Script execution point
-crawl_today_notices(driver, xpath_list)
 # old_notices = new_notices.copy()
 
 # try:
