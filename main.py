@@ -6,8 +6,16 @@ app = FastAPI()
 
 from model.major import Major
 
+
 from cse.important import cse_important
 from kor.main import kor_important
+from MEC.main import MEC_important
+from AI.main import AI_important
+from AIE.main import AIE_important
+from SSE.main import SSE_important
+from CBE.main import CBE_important
+from EE.main import EE_important
+
 from MEC.main import MEC_important
 from AI.main import AI_important
 from AIE.main import AIE_important
