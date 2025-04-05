@@ -12,9 +12,13 @@ def crawl_today_notices(driver, xpath_list):
     # new_notices.clear()
     for each_xpath in xpath_list:
         notice_date = driver.find_element(By.XPATH, each_xpath["registered_date"]).text
-        notice_title = driver.find_element(By.XPATH, each_xpath["title"]).text
+        el_notice_title = driver.find_element(By.XPATH, each_xpath["title"])
+
+        notice_title = el_notice_title.text
+        notice_href = el_notice_title.get_attribute("href")
         print(notice_title)
         print(notice_date)
+        print(notice_href)
         # if notice_date == date_today:
         #     # notice_title = driver.find_element(By.XPATH, each_xpath["title"])
         #     notice = {
