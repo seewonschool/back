@@ -1,0 +1,19 @@
+[project]
+name = "back"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "naya-h2",email = "hw7666@naver.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "selenium (>=4.31.0,<5.0.0)",
+    "fake-useragent (>=2.1.0,<3.0.0)",
+    "webdriver-manager (>=4.0.2,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

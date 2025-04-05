@@ -62,7 +62,9 @@ def cse_important():
         xpath_list.append(notice)
 
     data = crawl_today_notices(driver, xpath_list)
-    print(data)
+    # print(data)
+
+    driver.quit()
     return data
 
 
