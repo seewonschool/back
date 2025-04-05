@@ -17,13 +17,6 @@ from SSE.main import SSE_important
 from CBE.main import CBE_important
 from EE.main import EE_important
 
-from mec.main import MEC_important
-from AI.main import AI_important
-from AIE.main import AIE_important
-from SSE.main import SSE_important
-from CBE.main import CBE_important
-from EE.main import EE_important
-
 headers = {
         'Authorization': 'Bearer e0530d2e.12f54b7fdb1f4628a6280c34eee7ef0c',
         'Content-Type': 'application/json'
@@ -40,7 +33,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 @app.get("/notices/all/{major}")
 def read_notice(major: Major):
-    if major == "cse":
+    if major == Major.cse:
       
     #   res = requests.get('https://api.kakaowork.com/v1/users.list', headers=headers)
     #   result = res.json()
@@ -58,7 +51,7 @@ def read_notice(major: Major):
           res = requests.post(f'http://127.0.0.1:8000/chat', headers=headers, json=data)
 
       return cse_important()
-    if major == "kor":
+    if major == Major.kor:
         return kor_important()
     if major == "MEC":
         notices = MEC_important()
@@ -160,12 +153,3 @@ def send_chat(msg: Msg):
     res = requests.post("https://api.kakaowork.com/v1/messages.send", headers=headers, json=data)
     result = res.json()
     print(result)
-
-
-# {
-#                     "type": "header",
-#                     "text": msg.title,
-#                     "style": "yellow"
-#                 },
-
-
