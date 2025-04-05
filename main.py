@@ -5,8 +5,16 @@ from fastapi import FastAPI
 app = FastAPI()
 
 from model.major import Major
+
 from cse.important import cse_important
 from kor.main import kor_important
+from MEC.main import MEC_important
+from AI.main import AI_important
+from AIE.main import AIE_important
+from SSE.main import SSE_important
+from CBE.main import CBE_important
+from EE.main import EE_important
+
 
 @app.get("/")
 def read_root():
@@ -23,8 +31,15 @@ def read_notice(major: Major):
       return cse_important()
     if major == "kor":
         return kor_important()
-
-# @app.get("/notices/today/{major}")
-# def filter_notice(major: Major):
-#     if major == "cse":
-        
+    if major == "MEC":
+        return MEC_important()
+    if major == "AI":
+        return AI_important()
+    if major == "AIE":
+        return AIE_important()
+    if major == "SSE":
+        return SSE_important()
+    if major == "CBE":
+        return CBE_important()
+    if major == "EE":
+        return EE_important()
