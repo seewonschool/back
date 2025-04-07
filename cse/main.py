@@ -1,5 +1,6 @@
 import sys
 import os
+import datetime
 
 # 현재 스크립트(main.py)의 상위 디렉토리를 sys.path에 추가
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -7,6 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from enum import Enum
 from crawling.crawling_first import crawling_notices
 from crawling.crawling_today import filter_date_notices
+from crawling.crawling_main import crawling_main
+from const.kakao_conversation import KakaoConversaionId
 
 class Notice_Type(str, Enum):
   important = "important"
@@ -26,8 +29,8 @@ class CSE_Link(str, Enum):
 def cse_today_notices(type: Notice_Type):
   notices = crawling_notices(CSE_Link[type], "/html/body/div/div[4]/div[2]/div[4]/div/div/ul", "li", "/div/div[2]/a", "/div/div[2]/div/span[2]")
   
-  # TODO: 오늘 등록된 것만 거르는 로직 추가
-  return filter_date_notices(notices, '2025.03.28')
+  date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
 
+  return filter_date_notices(notices, date_today)
 
-# print(cse_today_notices(Notice_Type.job))
+crawling_main('data.json', KakaoConversaionId.CSE, cse_today_notices(Notice_Type.job))
