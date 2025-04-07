@@ -8,12 +8,10 @@ app = FastAPI()
 from model.major import Major
 import requests
 
-from cse.important import cse_important
 from kor.main import kor_important
 from mec.main import MEC_important
 from AI.main import AI_important
 from AIE.main import AIE_important
-from SSE.main import SSE_important
 from CBE.main import CBE_important
 from EE.main import EE_important
 
@@ -33,24 +31,24 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 @app.get("/notices/all/{major}")
 def read_notice(major: Major):
-    if major == Major.cse:
+    # if major == Major.cse:
       
-    #   res = requests.get('https://api.kakaowork.com/v1/users.list', headers=headers)
-    #   result = res.json()
-    #   print(result["users"])
+    # #   res = requests.get('https://api.kakaowork.com/v1/users.list', headers=headers)
+    # #   result = res.json()
+    # #   print(result["users"])
 
-      notices = cse_important()
-      for item in notices:
-          data = {
-              'conversation_id': 12352747,
-              'date': item["date"],
-              'link': item["link"],
-              'title': item["title"]
-          }
+    #   # notices = cse_important()
+    #   # for item in notices:
+    #   #     data = {
+    #   #         'conversation_id': 12352747,
+    #   #         'date': item["date"],
+    #   #         'link': item["link"],
+    #   #         'title': item["title"]
+    #   #     }
 
-          res = requests.post(f'http://127.0.0.1:8000/chat', headers=headers, json=data)
+    #   #     res = requests.post(f'http://127.0.0.1:8000/chat', headers=headers, json=data)
 
-      return cse_important()
+    #   # return cse_important()
     if major == Major.kor:
         return kor_important()
     if major == "MEC":
@@ -79,8 +77,8 @@ def read_notice(major: Major):
         return notices
     if major == "AIE":
         return AIE_important()
-    if major == "SSE":
-        return SSE_important()
+    # if major == "SSE":
+    #     # return SSE_important()
     if major == "CBE":
         return CBE_important()
     if major == "EE":

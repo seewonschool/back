@@ -1,87 +1,24 @@
 ### 시스템반도체공학과과 - 주요공지
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 
-from fake_useragent import UserAgent
 import datetime
-import time
+import sys
+import os
 
-from dotenv import load_dotenv
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from cse.crawl_notices import crawl_today_notices
+from crawling.crawling_first import crawling_notices
+from crawling.crawling_today import filter_date_notices
+from crawling.crawling_main import crawling_main
+from const.kakao_conversation import KakaoConversaionId
 
-def SSE_important():
-    detecting_website = (
-        "https://sse.sogang.ac.kr/kor/community/notice.php"
-    )
-    detecting_interval = 60
+def sse_today_notices():
+  notices = crawling_notices("https://sse.sogang.ac.kr/kor/community/notice.php", "/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody", "tr", "/td[2]/div/a", "/td[3]")
+  
+  # TODO: 오늘 등록된 것만 거르는 로직 추가'
+  # UTC+9 Timezone에서의 오늘 날짜 formatting
+  
+  date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
 
-    title_parent = f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody"
+  return filter_date_notices(notices, '2025.03.21')
 
-
-    load_dotenv()
-
-
-    # Selenium options
-    chrome_options = webdriver.ChromeOptions()
-    ua = UserAgent()
-    userAgent = ua.random
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument(f"user-agent={userAgent}")
-
-    # 드라이버 실행
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()), 
-        options=chrome_options
-    )
-
-    # 3초 기다림
-
-    driver.implicitly_wait(10)
-    driver.get(detecting_website)
-    time.sleep(5)
-
-    el_notice_box = driver.find_element(By.XPATH, title_parent)
-    list_items = el_notice_box.find_elements(By.TAG_NAME, "tr")
-    notice_num = len(list_items)
-
-    xpath_list = []
-    for i in range(1, notice_num):
-        notice = {
-            "title": f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[2]/div/a",
-            "registered_date": f"/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody/tr[{i}]/td[3]"
-        }
-        xpath_list.append(notice)
-
-    data = crawl_today_notices(driver, xpath_list)
-    print(data)
-    return data
-
-
-# old_notices = new_notices.copy()
-
-# try:
-#     # slack_api.notify_started(slack_channel)
-
-#     # 반복 실행
-#     while True:
-#         # 오늘 올라온 공지 detect
-#         crawl_today_notices()
-
-#         # 기존 공지-새 공지 비교
-#         detect_changed_notices()
-
-#         # 저장하고 있던 공지 업데이트
-#         old_notices = new_notices.copy()
-
-#         # 1분 후 다시 실행
-#         time.sleep(detecting_interval)
-#         driver.refresh()
-
-# finally:
-#     driver.quit()
-#     # slack_api.notify_terminated(slack_channel)
+crawling_main('data.json', KakaoConversaionId.SSE, sse_today_notices)

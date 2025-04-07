@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 
 import time
 
-from model.major import Major
-
 # 한 페이지에 게시된 공지 개수를 찾아주는 함수
 def counting_notices(driver, parent_path, child_tagname):
   el_notice_box = driver.find_element(By.XPATH, parent_path)
