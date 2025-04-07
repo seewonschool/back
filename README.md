@@ -1,28 +1,48 @@
-## CONDA 환경 설정하는 법
+## POETRY 환경 설정하는 법
+
+poetry가 설치되지 않았다면?
+
+```
+pip install poetry
+```
 
 1. 아래 명령어로 환경 생성
 
 ```
-conda env create -f environment.yml
+poetry install
 ```
 
 2. 환경 활성화
 
 ```
-conda activate devops-prj
+poetry shell
 ```
 
-3. pip 패키지 다시 설치
+3. 종속성 설치
 
 ```
-python -m pip install selenium fake_useragent webdriver_manager
+poetry install
 ```
 
 4. 잘 돌아가는 지 확인
 
 ```
-cd cse_main
-python cse_main.py
+cd sse
+python main.py
+```
+
+---
+
+poetry 비활성화 방법
+
+```
+exit
+```
+
+poetry 종속성 추가 (새로운 라이브러리 설치하는 경우)
+
+```
+poetry add <라이브러리명>
 ```
 
 <br />
