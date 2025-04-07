@@ -1,11 +1,11 @@
 from enum import Enum
 
 class Major(str, Enum):
-  cse = "cse"
-  kor = "kor"
+  cse = "CSE"
+  kor = "KOR"
   MEC = "MEC"
   AI = "AI"
   AIE = "AIE"
   SSE = "SSE"
   CBE = "CBE"
-  EE ="EE"
+  EE = "EE"
