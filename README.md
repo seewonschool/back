@@ -60,3 +60,17 @@ develop: 개발
 ---
 feature/*: 기능 개발 (develop에서 생성, develop으로 merge)
 ```
+
+## Docker 빌드 및 실행 방법
+
+1.  Docker Build (\*루트 디렉토리에서 실행)
+
+```
+docker build -f AI/Dockerfile -t sogang-ai-bot .
+```
+
+2. Docker 실행 @은교
+
+```
+
+```
