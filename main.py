@@ -22,6 +22,7 @@ from fastapi.responses import FileResponse
 db = firestore.client()
 
 from openpyxl import Workbook
+from const.kakao_conversation import KakaoConversaionId, MajorCode
 
 
 headers = {
@@ -80,7 +81,39 @@ def get_students_collection():
 
     # return students
 
+@app.get("/kakao/users")
+def get_kakao_users():
+    res = requests.get("https://api.kakaowork.com/v1/users.list", headers=headers)
+    result = res.json()
+    return result["users"]
 
+@app.get("/room/invite")
+def invite_room():
+    users = get_kakao_users()
+    response = []
+    for user in users:
+      print(user["name"], user["department"])
+      if(MajorCode.get(user["department"]) == None): continue
+      print(user["name"], MajorCode.get(user["department"]),KakaoConversaionId[MajorCode.get(user["department"])].value)
+      data = {
+          'user_ids': [user["id"]]
+      }
+      res = requests.post(f"https://api.kakaowork.com/v1/conversations/{KakaoConversaionId[MajorCode.get(user["department"])].value}/invite", headers=headers, json=data)
+      result = res.json()
+      response.append(result)
+    return response
+
+class KickUser(BaseModel):
+    conversation_id: int
+    user_ids: list[int]
+@app.delete("/room/kick")
+def kick_room(body: KickUser):
+    data = {
+        'user_ids': body.user_ids
+    }
+    res = requests.post(f"https://api.kakaowork.com/v1/conversations/{body.conversation_id}/kick", headers=headers, json=data)
+    result = res.json()
+    return result
 
 @app.get("/conversation")
 def make_chat():
@@ -90,7 +123,8 @@ def make_chat():
     }
     res = requests.post("https://api.kakaowork.com/v1/conversations.open", headers=headers, json=data)
     result = res.json()
-    print(result)
+    return result
+
 
 class Msg(BaseModel):
     conversation_id: int
