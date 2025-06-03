@@ -136,7 +136,8 @@ while True:
         doc.reference.delete()
     driver.quit()
 
-    res = requests.post('http://127.0.0.1:8000/room/invite', headers=headers)
+    time.sleep(60)
+    res = requests.get('http://127.0.0.1:8000/room/invite', headers=headers)
 
     time.sleep(300) #5분 뒤 재실행
 
