@@ -95,15 +95,15 @@ while True:
         driver.find_element(By.XPATH, '/html/body/div[4]/div/div/section/form/div[1]/fieldset[1]/div[3]/div/div/input').send_keys(row.get("name", ""))
 
         # 소속 버튼
-        major_btn1 = driver.find_element(By.XPATH, '/html/body/div[4]/div/div/section/form/div[1]/fieldset[2]/div[2]/div/div/div/button')
+        major_btn1 = driver.find_element(By.XPATH, '/html/body/div[4]/div/div/section/form/div[1]/fieldset[2]/div[1]/div/div/div/button')
         major_btn1.click()
         major_btn1.click() #안눌려서 일부러 2번 넣은거임
-        driver.implicitly_wait(50)
+        driver.implicitly_wait(100)
 
         # 조직 선택 버튼
-        major_btn2 = driver.find_element(By.XPATH, '/html/body/div[4]/div/div/section/form/div[1]/fieldset[2]/div[2]/div/div/div[1]/div[1]/div[2]')
+        major_btn2 = driver.find_element(By.XPATH, '/html/body/div[4]/div/div/section/form/div[1]/fieldset[2]/div[1]/div/div/div[1]/div/div[2]/input')
         major_btn2.click()
-        driver.implicitly_wait(70)
+        driver.implicitly_wait(100)
 
         # 대학 버튼 전부 열기
         for path in parent_major_path:

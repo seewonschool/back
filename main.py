@@ -15,7 +15,7 @@ headers = {
 
 @app.get("/users/kakao")
 def get_kakao_users():
-    res = requests.get("https://api.kakaowork.com/v1/users.list", headers=headers)
+    res = requests.get("https://api.kakaowork.com/v1/users.list?limit=100", headers=headers)
     result = res.json()
     return result["users"]
 
