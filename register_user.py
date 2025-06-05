@@ -67,17 +67,24 @@ while True:
 
     # 등록된 "~대학" 의 +버튼 path 전부 추가 (전부 열고 선택하는 방식으로)
     parent_major_path = ["/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[2]/div/div/button",
-                        "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[6]/div/div/button"]
+                        "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[6]/div/div/button",
+                        "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[9]/div/div/button",
+                        "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[10]/div/div/button",
+                        "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[9]/div/div/button"]
 
     # 과별 버튼 path
     child_major_path = {
-        "컴퓨터공학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[3]",
-        "인공지능학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[4]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "컴퓨터공학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[3]",
+        "인공지능학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[4]/div/div/div/div/div[4]/div/div[2]/span/div",
         "AI기반 자유전공학부": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[5]/div/div/div/div/div[4]/div/div[2]/span/div",
-        "전자공학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[7]/div/div/div/div/div[4]/div/div[2]/span/div",
-        "화공생명공학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[8]/div/div/div/div/div[4]/div/div[2]/span/div",
-        "기계공학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[9]/div/div/div/div/div[4]/div/div[2]/span/div",
-        "시스템반도체공학": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[10]/div/div/div/div/div[4]/div/div[2]/span/div"
+        "전자공학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[7]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "화공생명공학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[8]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "기계공학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[9]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "시스템반도체공학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[10]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "국어국문학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[8]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "영문학부": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[9]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "미디어&엔터테인먼트학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[11]/div/div/div/div/div[4]/div/div[2]/span/div",
+        "수학과": "/html/body/div[5]/div/div/section/div[2]/div[1]/div/div/div/div/div[10]/div/div/div/div/div[4]/div/div[2]/span/div"
     }
 
     #firebase 내 유저 정보 카카오에 등록
