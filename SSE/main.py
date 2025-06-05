@@ -19,4 +19,4 @@ def sse_today_notices():
 
   return filter_date_notices(notices, date_today)
 
-crawling_main('sse/data_sse.json', KakaoConversaionId.SSE, sse_today_notices)
+crawling_main('SSE/data_sse.json', KakaoConversaionId.SSE, sse_today_notices)

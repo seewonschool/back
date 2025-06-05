@@ -7,6 +7,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import requests
 import time
+from selenium.webdriver.chrome.service import Service
+from fake_useragent import UserAgent
 
 load_dotenv()
 
@@ -19,8 +21,18 @@ headers = {
 }
 
 while True:
+    # Selenium options
+    chrome_options = webdriver.ChromeOptions()
+    ua = UserAgent()
+    userAgent = ua.random
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument(f"user-agent={userAgent}")
+
     # 웹드라이버 설정
-    driver = webdriver.Chrome()
+    service = Service("/usr/bin/chromedriver")  # 직접 경로 명시
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     # 로그인 페이지로 이동
     driver.get('https://kakaowork.com/login?service=admin')
 

@@ -13,5 +13,8 @@ python /app/kor/main.py &
 python /app/mec/main.py &
 python /app/SSE/main.py &
 
+# register_user.py 실행
+python /app/register_user.py &
+
 # wait for all background processes
 wait
