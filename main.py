@@ -1,17 +1,51 @@
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from typing import Union
 from pydantic import BaseModel
 
-from fastapi import FastAPI
-
-app = FastAPI()
-
+from const.kakao_conversation import KakaoConversaionId, MajorCode
 from model.major import Major
 import requests
+app = FastAPI()
 
 headers = {
         'Authorization': 'Bearer e0530d2e.12f54b7fdb1f4628a6280c34eee7ef0c',
         'Content-Type': 'application/json'
 }
+
+@app.get("/users/kakao")
+def get_kakao_users():
+    res = requests.get("https://api.kakaowork.com/v1/users.list?limit=100", headers=headers)
+    result = res.json()
+    return result["users"]
+
+@app.get("/room/invite")
+def invite_room():
+    users = get_kakao_users()
+    response = []
+    for user in users:
+      print(user["name"], user["department"])
+      if(MajorCode.get(user["department"]) == None): continue
+      print(user["name"], MajorCode.get(user["department"]),KakaoConversaionId[MajorCode.get(user["department"])].value)
+      data = {
+          'user_ids': [user["id"]]
+      }
+      res = requests.post(f"https://api.kakaowork.com/v1/conversations/{KakaoConversaionId[MajorCode.get(user["department"])].value}/invite", headers=headers, json=data)
+      result = res.json()
+      response.append(result)
+    return response
+
+class KickUser(BaseModel):
+    conversation_id: int
+    user_ids: list[int]
+@app.delete("/room/kick")
+def kick_room(body: KickUser):
+    data = {
+        'user_ids': body.user_ids
+    }
+    res = requests.post(f"https://api.kakaowork.com/v1/conversations/{body.conversation_id}/kick", headers=headers, json=data)
+    result = res.json()
+    return result
 
 @app.get("/conversation")
 def make_chat():
@@ -21,7 +55,8 @@ def make_chat():
     }
     res = requests.post("https://api.kakaowork.com/v1/conversations.open", headers=headers, json=data)
     result = res.json()
-    print(result)
+    return result
+
 
 class Msg(BaseModel):
     conversation_id: int

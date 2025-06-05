@@ -1,1 +1,6 @@
 __pycache__/
+firebasekey.json
+students_data.xlsx
+
+.env
+.env.local
