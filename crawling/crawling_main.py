@@ -13,18 +13,18 @@ headers = {
 
 detecting_interval = 30 #나중에 바꾸기
 
-def crawling_main(file_path, conversation_id, craw_func):
+def crawling_main(file_path, conversation_id, craw_func): 
   try:
       # 반복 실행
+      current_directory = os.getcwd()
+      print(f"Current directory: {current_directory}")
       while True:
           with open(file_path, "r") as json_file:
               old_data = json.load(json_file)
+              notices = craw_func()
+              print("크롤링 완료")
 
-          notices = craw_func()
-          print("크롤링 완료")
-
-          print(notices)
-
+              print(notices)
           for item in notices:
               data_to_send = {
                       'conversation_id': conversation_id,

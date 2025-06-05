@@ -1,7 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager 
+# 시스템에 설치된 드라이버 직접 사용을 위해 삭제
 from fake_useragent import UserAgent
 from dotenv import load_dotenv
 
@@ -44,10 +45,17 @@ def crawling_notices(website_link, notice_parent_path, notice_child_tagname, tit
   chrome_options.add_argument(f"user-agent={userAgent}")
 
   # 드라이버 실행
-  driver = webdriver.Chrome(
-      service=Service(ChromeDriverManager().install()), 
-      options=chrome_options
-  )
+  # driver = webdriver.Chrome(
+  #     service=Service(ChromeDriverManager().install()), 
+  #     options=chrome_options
+  # )
+
+  # line 56 ~ 57
+  # 문제 : 도커 내부가 Debian 리눅스 x86_64 기반, 다운로드된 chromedriver가 실행 가능한 리눅스 바이너리 형식이 아님
+  # 해결 : webdriver_manager 대신 시스템에 설치된 드라이버 직접 사용
+  service = Service("/usr/bin/chromedriver")  # 직접 경로 명시
+  driver = webdriver.Chrome(service=service, options=chrome_options)
+
 
   # 웹페이지 로딩
   driver.implicitly_wait(10)
