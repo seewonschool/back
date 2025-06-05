@@ -20,7 +20,8 @@ headers = {
 
 while True:
     # 웹드라이버 설정
-    driver = webdriver.Chrome()
+    service = Service("/usr/bin/chromedriver")  # 직접 경로 명시
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     # 로그인 페이지로 이동
     driver.get('https://kakaowork.com/login?service=admin')
 
