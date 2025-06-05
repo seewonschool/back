@@ -18,4 +18,4 @@ def mec_today_notices():
 
   return filter_date_notices(notices, date_today)
 
-crawling_main('data.json', KakaoConversaionId.MEC, mec_today_notices)
+crawling_main('mec/data_mec.json', KakaoConversaionId.MEC, mec_today_notices)

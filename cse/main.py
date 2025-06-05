@@ -26,11 +26,11 @@ class CSE_Link(str, Enum):
   job = "https://scc.sogang.ac.kr/front/cmsboardlist.do?siteId=cs&bbsConfigFK=1748"
 
 
-def cse_today_notices(type: Notice_Type):
+def cse_today_notices(type: Notice_Type=Notice_Type.important):
   notices = crawling_notices(CSE_Link[type], "/html/body/div/div[4]/div[2]/div[4]/div/div/ul", "li", "/div/div[2]/a", "/div/div[2]/div/span[2]")
   
-  date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
-
+  # date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
+  date_today = "2025.06.04"
   return filter_date_notices(notices, date_today)
 
-crawling_main('data.json', KakaoConversaionId.CSE, cse_today_notices(Notice_Type.job))
+crawling_main('cse/data_cse.json', KakaoConversaionId.CSE, cse_today_notices)

@@ -18,4 +18,4 @@ def kor_today_notices():
 
   return filter_date_notices(notices, date_today)
 
-# crawling_main('data.json', KakaoConversaionId.KOR, kor_today_notices)
+crawling_main('kor/data_kor.json', KakaoConversaionId.KOR, kor_today_notices)

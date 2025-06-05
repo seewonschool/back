@@ -15,7 +15,11 @@ def ai_today_notices():
   
   # UTC+9 Timezone에서의 오늘 날짜 formatting
   date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
-
+  
   return filter_date_notices(notices, date_today)
-
-crawling_main('data.json', KakaoConversaionId.AI, ai_today_notices)
+# 왜 이럴까? 이거 안되나 ㅎ?;; 터미널 봤어? 웅웅 json이 없으시대 엉엉 드렁슨 언니 돌려조..........넵!르겟어 돌리고 돌리이고 언제까지 돌리냐 두근 클 없대 슈발 
+current_directory = os.getcwd()
+print(f"Current directory: {current_directory}")
+crawling_main("./AI/data_ai.json", KakaoConversaionId.AI, ai_today_notices)
+# print(f"Absolute path: {os.path.abspath('data_ai.json')}")
+# print(f"Current directory: {current_directory}")
