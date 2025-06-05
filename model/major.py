@@ -9,3 +9,6 @@ class Major(str, Enum):
   SSE = "SSE"
   CBE = "CBE"
   EE = "EE"
+  ENG = "ENG"
+  MET = "MET"
+  MAT = "MAT"
