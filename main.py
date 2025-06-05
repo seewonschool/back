@@ -24,13 +24,16 @@ def invite_room():
     users = get_kakao_users()
     response = []
     for user in users:
-      print(user["name"], user["department"])
-      if(MajorCode.get(user["department"]) == None): continue
-      print(user["name"], MajorCode.get(user["department"]),KakaoConversaionId[MajorCode.get(user["department"])].value)
+      user_name = user["name"]
+      user_dep = user["department"]
+      print(user_name, user_dep)
+      if(MajorCode.get(user_dep) == None): continue
+      print(user_name, MajorCode.get(user_dep),KakaoConversaionId[MajorCode.get(user_dep)].value)
       data = {
           'user_ids': [user["id"]]
       }
-      res = requests.post(f"https://api.kakaowork.com/v1/conversations/{KakaoConversaionId[MajorCode.get(user["department"])].value}/invite", headers=headers, json=data)
+      print(KakaoConversaionId[MajorCode.get(user_dep)].value)
+      res = requests.post(f"https://api.kakaowork.com/v1/conversations/{KakaoConversaionId[MajorCode.get(user_dep)].value}/invite", headers=headers, json=data)
       result = res.json()
       response.append(result)
     return response

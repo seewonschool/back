@@ -133,7 +133,7 @@ while True:
         driver.find_element(By.XPATH, '/html/body/div[4]/div/div/div[3]/button').click()
 
         # 등록한 유저 정보 firebase에서 삭제
-        doc.reference.delete()
+        # doc.reference.delete()
     driver.quit()
 
     time.sleep(60)
