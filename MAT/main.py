@@ -18,4 +18,4 @@ def mat_today_notices():
 
   return filter_date_notices(notices, date_today)
 
-crawling_main('data.json', KakaoConversaionId.MAT, mat_today_notices)
+crawling_main('MAT/data_mat.json', KakaoConversaionId.MAT, mat_today_notices)

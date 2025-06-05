@@ -18,4 +18,4 @@ def eng_today_notices():
 
   return filter_date_notices(notices, date_today)
 
-crawling_main('data.json', KakaoConversaionId.ENG, eng_today_notices)
+crawling_main('ENG/data_eng.json', KakaoConversaionId.ENG, eng_today_notices)
