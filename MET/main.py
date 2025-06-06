@@ -1,5 +1,4 @@
-### 시스템반도체공학과과 - 주요공지
-
+### 미엔
 import datetime
 import sys
 import os
@@ -11,13 +10,12 @@ from crawling.crawling_today import filter_date_notices
 from crawling.crawling_main import crawling_main
 from const.kakao_conversation import KakaoConversaionId
 
-def sse_today_notices():
-  notices = crawling_notices("https://sse.sogang.ac.kr/kor/community/notice.php", "/html/body/div[2]/div[2]/div/div/div/div/div[2]/div[2]/table/tbody", "tr", "/td[2]/div/a", "/td[3]")
+def met_today_notices():
+  notices = crawling_notices("https://scc.sogang.ac.kr/front/cmsboardlist.do?siteId=mae&bbsConfigFK=1988", "/html/body/div/div[4]/div[2]/div[3]/div/div/ul", "li", "/div/div[2]/a", "/div/div[2]/div/span[2]")
   
   # UTC+9 Timezone에서의 오늘 날짜 formatting
   date_today = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y.%m.%d")
 
   return filter_date_notices(notices, date_today)
 
-crawling_main('SSE/data_sse.json', KakaoConversaionId.SSE, sse_today_notices)
-
+crawling_main('MET/data.json', KakaoConversaionId.MET, met_today_notices)

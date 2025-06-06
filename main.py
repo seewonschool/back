@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
 from typing import Union
 from pydantic import BaseModel
 
@@ -18,6 +17,7 @@ def get_kakao_users():
     res = requests.get("https://api.kakaowork.com/v1/users.list?limit=100", headers=headers)
     result = res.json()
     return result["users"]
+
 
 @app.get("/room/invite")
 def invite_room():
@@ -53,8 +53,8 @@ def kick_room(body: KickUser):
 @app.get("/conversation")
 def make_chat():
     data = {
-        'user_ids': [],
-        'conversation_name': "빈채팅방"
+        'user_ids': ["11071605", "11071628", "11071679", "11072414", "11074996"],
+        'conversation_name': "수학과"
     }
     res = requests.post("https://api.kakaowork.com/v1/conversations.open", headers=headers, json=data)
     result = res.json()
