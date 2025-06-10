@@ -7,7 +7,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import requests
 import time
-# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from fake_useragent import UserAgent
 #ActionChains모듈 가져오기
 from selenium.webdriver import ActionChains
@@ -26,20 +27,24 @@ headers = {
 
 while True:
     # Selenium options
-    # chrome_options = webdriver.ChromeOptions()
-    # ua = UserAgent()
-    # userAgent = ua.random
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--no-sandbox")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument(f"user-agent={userAgent}")
+    chrome_options = webdriver.ChromeOptions()
+    ua = UserAgent()
+    userAgent = ua.random
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument(f"user-agent={userAgent}")
 
     # 웹드라이버 설정
     # service = Service("/usr/bin/chromedriver")  # 직접 경로 명시
     # driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome()
-    #ActionChains생성
-    action = ActionChains(driver)
+    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome(
+      service=Service(ChromeDriverManager().install()), 
+      options=chrome_options
+    )
+
+    driver.implicitly_wait(20)
     # 로그인 페이지로 이동
     driver.get('https://kakaowork.com/login?service=admin')
 
